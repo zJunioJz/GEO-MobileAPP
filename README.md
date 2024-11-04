@@ -4,7 +4,6 @@ Este projeto faz parte de uma iniciativa extensionista da Faculdade Estácio de 
 
 ## Equipe 👨‍💻👩‍💻
 - Daniel Oliveira
-- Luis Guilherme
 - Jefferson Junio
 - Renan Aderne
 - Daniel Heller
