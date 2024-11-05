@@ -51,6 +51,23 @@ app.post('/create-booking', async (req, res) => {
         res.status(500).json({ error: 'Não foi possível buscar as turmas.' });
     }
 });
+
+app.get("/userData", async (req, res) => {
+  try {
+    const query = `
+      SELECT users.*
+      FROM users
+      JOIN bookings ON users.id_turma = bookings.id;
+    `;
+    const result = await pool.query(query);
+    console.log(result.rows);
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Erro ao buscar dados:", error);
+    res.status(500).json({ error: "Erro ao buscar dados" });
+  }
+});
+
   
 
 // Iniciar o servidor
