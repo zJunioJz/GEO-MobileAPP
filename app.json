@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "GEO-MobileAPP",
     "slug": "GEO-MobileAPP",
     "version": "1.0.0",

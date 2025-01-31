@@ -12,37 +12,36 @@
     "@babel/plugin-transform-class-properties": "^7.25.4",
     "@babel/plugin-transform-private-methods": "^7.25.4",
     "@babel/plugin-transform-private-property-in-object": "^7.24.7",
-    "@react-native-async-storage/async-storage": "^1.23.1",
-    "@react-native-community/datetimepicker": "8.0.1",
+    "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-community/masked-view": "^0.1.11",
-    "@react-native-picker/picker": "2.7.5",
+    "@react-native-picker/picker": "^2.9.0",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "@react-navigation/stack": "^6.4.1",
     "axios": "^1.7.7",
     "babel-plugin-inline-dotenv": "^1.7.0",
     "babel-plugin-module-resolver": "^5.0.2",
-    "babel-preset-expo": "^11.0.14",
-    "expo": "~51.0.38",
-    "expo-font": "~12.0.10",
-    "expo-secure-store": "~13.0.2",
-    "expo-status-bar": "~1.12.1",
-    "lottie-react-native": "^6.7.0",
+    "babel-preset-expo": "~12.0.0",
+    "expo": "^52.0.28",
+    "expo-font": "~13.0.3",
+    "expo-secure-store": "~14.0.1",
+    "expo-status-bar": "~2.0.1",
+    "lottie-react-native": "7.1.0",
     "moment": "^2.30.1",
-    "react": "18.2.0",
-    "react-native": "0.74.5",
+    "react": "^18.3.1",
+    "react-native": "^0.76.6",
     "react-native-dotenv": "^3.4.11",
     "react-native-element-dropdown": "^2.12.2",
-    "react-native-gesture-handler": "~2.16.1",
+    "react-native-gesture-handler": "~2.20.2",
     "react-native-modal-datetime-picker": "^18.0.0",
-    "react-native-reanimated": "~3.10.1",
-    "react-native-safe-area-context": "4.10.5",
-    "react-native-screens": "3.31.1",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-safe-area-context": "4.12.0",
+    "react-native-screens": "~4.4.0",
     "react-native-swiper": "^1.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@types/react": "~18.2.45",
     "metro-react-native-babel-preset": "^0.77.0",
     "prettier": "^3.3.3",
     "typescript": "~5.3.3"
@@ -51,5 +50,16 @@
   "description": "Este projeto faz parte de uma iniciativa extensionista da Faculdade Estácio de Sá, desenvolvido para a disciplina de Programação Para Dispositivos Móveis em Android. O objetivo é criar um aplicativo para um Ginásio Educacional Olímpico, que permite mostrar, inserir e exibir dados relacionados ao desempenho físico dos alunos, idade, IMC (Índice de Massa Corporal) e outros parâmetros importantes.",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "react-native-element-dropdown",
+          "react-native-swiper"
+        ],
+        "listUnknownPackages": false
+      }
+    }
+  }
 }
