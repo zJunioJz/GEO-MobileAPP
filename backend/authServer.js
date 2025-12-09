@@ -36,9 +36,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// ===== ROTAS ===== //
-
-// Registrar usuário (apenas username, email, senha)
+// Registrar usuário
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -47,7 +45,7 @@ app.post('/register', async (req, res) => {
   }
 
   try {
-    const emailCheck = await pool.query('SELECT * FROM usuario WHERE email = $1', [email]);
+    const emailCheck = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (emailCheck.rows.length > 0) {
       return res.status(400).json({ error: 'E-mail já cadastrado.' });
     }
@@ -55,7 +53,7 @@ app.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await pool.query(
-      'INSERT INTO usuario (username, email, password, atribuicao_id) VALUES ($1, $2, $3, $4) RETURNING id',
+      'INSERT INTO users (username, email, password, atribuicao_id) VALUES ($1, $2, $3, $4) RETURNING id',
       [username, email, hashedPassword, 1]
     );
 
@@ -72,7 +70,7 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
-    const userResult = await pool.query('SELECT * FROM usuario WHERE email = $1', [email]);
+    const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userResult.rows.length === 0) return res.status(401).json({ error: 'E-mail ou senha incorretos.' });
 
     const user = userResult.rows[0];
@@ -90,7 +88,7 @@ app.post('/login', async (req, res) => {
 // Buscar usuário
 app.get('/user', authenticateToken, async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM usuario WHERE id = $1', [req.user.id]);
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [req.user.id]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Usuário não encontrado' });
     res.json(result.rows[0]);
   } catch (err) {
@@ -114,7 +112,7 @@ app.put('/update-user', authenticateToken, async (req, res) => {
 
   try {
     const result = await pool.query(
-      `UPDATE usuario SET ${setQuery} WHERE id = $${fields.length + 1} RETURNING *`,
+      `UPDATE users SET ${setQuery} WHERE id = $${fields.length + 1} RETURNING *`,
       [...values, userId]
     );
     if (result.rows.length === 0) return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -133,7 +131,7 @@ app.put('/update-password', authenticateToken, async (req, res) => {
   if (!oldPassword || !newPassword) return res.status(400).json({ error: 'Forneça as senhas.' });
 
   try {
-    const userResult = await pool.query('SELECT * FROM usuario WHERE id = $1', [userId]);
+    const userResult = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
     if (userResult.rows.length === 0) return res.status(404).json({ error: 'Usuário não encontrado.' });
 
     const user = userResult.rows[0];
@@ -141,7 +139,7 @@ app.put('/update-password', authenticateToken, async (req, res) => {
     if (!isMatch) return res.status(401).json({ error: 'Senha antiga incorreta.' });
 
     const hashed = await bcrypt.hash(newPassword, 10);
-    await pool.query('UPDATE usuario SET password = $1 WHERE id = $2', [hashed, userId]);
+    await pool.query('UPDATE users SET password = $1 WHERE id = $2', [hashed, userId]);
 
     res.json({ message: 'Senha atualizada com sucesso!' });
   } catch (err) {
