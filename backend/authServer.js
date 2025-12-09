@@ -166,6 +166,7 @@ app.put('/update-password', authenticateToken, async (req, res) => {
 
 
 
+
 // Rota para registrar um usuário
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
@@ -180,8 +181,11 @@ app.post('/register', async (req, res) => {
 
       const hash = await bcrypt.hash(password, 10);
 
-      const sql = 'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id';
-      const result = await pool.query(sql, [username, email, hash]);
+     
+      const atribuicaoIdDefault = 1; 
+
+      const sql = 'INSERT INTO users (username, email, password, atribuicao_id) VALUES ($1, $2, $3, $4) RETURNING id';
+      const result = await pool.query(sql, [username, email, hash, atribuicaoIdDefault]);
 
       // Geração do token
       const token = jwt.sign(
@@ -197,6 +201,7 @@ app.post('/register', async (req, res) => {
       res.status(500).send(err.message);
   }
 });
+
 
 
 // Iniciar o servidor
